@@ -34,3 +34,5 @@ Detect comments and string literals
 Support more keywords or languages
 This small but functional lexical analyzer introduces students to the foundational concepts of compiler design. It’s also a great C programming exercise involving file I/O, string handling, and character analysis.
 
+OUTPUT:
+![Image](https://github.com/user-attachments/assets/a4ba59fc-37ff-43a2-944b-f5826736e3fa)
