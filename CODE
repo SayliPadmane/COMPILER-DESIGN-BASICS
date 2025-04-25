@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+// List of basic keywords
+const char *keywords[] = {
+    "int", "float", "if", "else", "while", "return", "char", "for", "double", "void"
+};
+int isKeyword(const char *str) {
+    for (int i = 0; i < 10; i++) {
+        if (strcmp(str, keywords[i]) == 0)
+            return 1;
+    }
+    return 0;
+}
+
+int isOperator(char ch) {
+    return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '=' || ch == '<' || ch == '>';
+}
+
+void analyze(const char *filename) {
+    FILE *file = fopen(filename, "r");
+    if (!file) {
+        printf("Error: Cannot open file.\n");
+        return;
+    }
+
+    char ch, buffer[100];
+    int i = 0;
+
+    printf("LEXICAL ANALYSIS OUTPUT:\n\n");
+
+    while ((ch = fgetc(file)) != EOF) {
+        // If operator, print it
+        if (isOperator(ch)) {
+            printf("Operator: %c\n", ch);
+        }
+        // If alphanumeric, collect characters
+        else if (isalnum(ch)) {
+            buffer[i++] = ch;
+        }
+        // If space or special symbol, process collected word
+        else if ((ch == ' ' || ch == '\n' || ch == '\t') && i > 0) {
+            buffer[i] = '\0';
+            i = 0;
+
+            if (isKeyword(buffer)) {
+                printf("Keyword: %s\n", buffer);
+            } else {
+                printf("Identifier: %s\n", buffer);
+            }
+        }
+    }
+
+    fclose(file);
+}
+
+int main() {
+    char filename[100];
+    printf("Enter the filename to analyze: ");
+    scanf("%s", filename);
+
+    analyze(filename);
+
+    return 0;
+}
+
